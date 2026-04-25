@@ -1,9 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/kOqwghv0)
 # ML Project — [Название проекта]
 
-**Студент:** [ФИО / Student ID]
+**Студент:** [Смеркалова Анастасия Артемовна / Student ID]
 
-**Группа:** [Группа]
+**Группа:** БИВ234
 
 
 ## Оглавление
@@ -20,11 +20,11 @@
 
 <!-- Кратко опишите задачу: что предсказываем, какой датасет, метрика качества -->
 
-**Задача:** [Классификация / Регрессия / Кластеризация / ...]
+**Задача:** Регрессия
 
-**Датасет:** [Название и источник датасета]
+**Датасет:** Starbucks Customer Ordering Patterns (Kaggle). Содержит информацию о заказах: время, локация, кастомизации и др.
 
-**Целевая метрика:** [Accuracy / F1 / RMSE / ...]
+**Целевая метрика:** R² – основная. Дополнительно: MAE и RMSE.
 
 
 ## Структура репозитория
@@ -36,9 +36,11 @@
 │   └── raw                     # Исходные файлы
 ├── models                      # Сохранённые модели 
 ├── notebooks
-│   ├── 01_eda.ipynb            # EDA
-│   ├── 02_baseline.ipynb       # Baseline-модель
-│   └── 03_experiments.ipynb    # Эксперименты и ablation study
+│   ├── 01_eda.ipynb            # EDA, очистка, feature engineering
+│   ├── 02_preprocessing_split.ipynb    # Подготовка данных и сплит
+│   └── 03_baseline.ipynb       # Baseline-модель (Linear Regression)
+│   └── 04_models.ipynb.        # Обучение 4+ моделей и ансамблей
+│   └── 05_hyperopt.ipynb       # Подбор гиперпараметров
 ├── presentation                # Презентация для защиты
 ├── report
 │   ├── images                  # Изображения для отчёта
@@ -57,8 +59,8 @@
 Этот блок замените способом запуска вашего сервиса.
 ```bash
 # 1. Клонировать репозиторий
-git clone <url>
-cd <repo-name>
+git clone <https://github.com/hsemlcourse/hseml-group-project-aasmerkalova.git>
+cd <hseml-group-project-aasmerkalova>
 
 # 2. Создать виртуальное окружение
 python -m venv .venv
@@ -70,15 +72,15 @@ pip install -r requirements.txt
 ```
 
 ## Данные
-- `data/raw/` — исходные файлы
-- `data/processed/` — предобработанные данные
+- `data/raw/` — исходные файлы (исходный csv файл скачан с Kaggle)
+- `data/processed/` — предобработанные данные после EDA и feature engineering: cleaned_data.csv, а также файлы сплитов (X_train.csv, X_val.csv, X_test.csv, y_train.csv, y_val.csv, y_test.csv).
 
 
 ## Результаты
 Здесь коротко выпишите результаты.
-| Модель | [Метрика 1] | [Метрика 2] | Примечание |
+| Модель | [R²] | [MAE] | Примечание |
 |--------|-------------|-------------|------------|
-| Baseline | — | — | |
+| Baseline | 0.9517| 1.00 | |
 | Лучшая модель | — | — | |
 
 
