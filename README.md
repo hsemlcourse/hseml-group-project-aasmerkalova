@@ -37,10 +37,11 @@
 ├── models                      # Сохранённые модели 
 ├── notebooks
 │   ├── 01_eda.ipynb            # EDA, очистка, feature engineering
-│   ├── 02_preprocessing_split.ipynb    # Подготовка данных и сплит
+│   ├── 02_preprocessing_split.ipynb    # Подготовка данных и сплит (train/val/test)
 │   └── 03_baseline.ipynb       # Baseline-модель (Linear Regression)
 │   └── 04_models.ipynb.        # Обучение 4+ моделей и ансамблей
 │   └── 05_hyperopt.ipynb       # Подбор гиперпараметров
+    └── 06_dimensionality_reduction.ipynb  # PCA и визуализация
 ├── presentation                # Презентация для защиты
 ├── report
 │   ├── images                  # Изображения для отчёта
@@ -50,13 +51,16 @@
 │   └── modeling.py             # Обучение и оценка моделей
 ├── tests
 │   └── test.py                 # Тесты пайплайна
+├── pyproject.toml              # Конфигурация ruff и других инструментов
+├── Dockerfile
+├── docker-compose.yml
 ├── requirements.txt
 └── README.md
 ```
 
 ## Запуск
 
-Этот блок замените способом запуска вашего сервиса.
+Локальный запуск (без Docker)
 ```bash
 # 1. Клонировать репозиторий
 git clone <https://github.com/hsemlcourse/hseml-group-project-aasmerkalova.git>
@@ -70,14 +74,23 @@ source .venv/bin/activate   # Linux/macOS
 # 3. Установить зависимости
 pip install -r requirements.txt
 ```
+Запуск через Docker
+```bash
+# Убедитесь, что Docker Desktop запущен на вашем компьютере. Затем выполните:
+docker-compose up --build
 
+#Остановка контейнера:
+docker-compose down
+```
 ## Данные
 - `data/raw/` — исходные файлы (исходный csv файл скачан с Kaggle)
 - `data/processed/` — предобработанные данные после EDA и feature engineering: cleaned_data.csv, а также файлы сплитов (X_train.csv, X_val.csv, X_test.csv, y_train.csv, y_val.csv, y_test.csv).
 
+Сплит: train (60%), validation (20%), test (20%). Фиксированный seed = 42.
+
 
 ## Результаты
-Здесь коротко выпишите результаты.
+
 | Модель | [R²] | [MAE] | [RMSE] | Примечание |
 |GradientBoosting|0.953276|0.966718|1.185269|
 |RandomForest|0.952553|0.971392|1.194398|
@@ -86,6 +99,28 @@ pip install -r requirements.txt
 | Baseline | 0.9517 | 1.00 | 1.22 | |
 | Лучшая модель GradientBoosting | 0.9549 | 0.97 | 1.18 |
 
+## Выбор финальной модели
+
+Финальная модель GradientBoosting с гиперпараметрами:
+
+  - reg__learning_rate: 0.09545214831324028
+  - reg__max_depth: 3
+  - reg__min_samples_leaf: 1
+  - reg__min_samples_split: 3
+  - reg__n_estimators: 179
+  - reg__subsample: 0.7644148053272926
+
+Лучшее R² (CV): 0.9532
+
+Эксперименты с уменьшением размерности (PCA)
+
+После one-hot кодирования размерность признаков составила 33.
+Применение PCA с сохранением 95% дисперсии снизило размерность до 23.
+
+RandomForest + PCA (валидация): R² = 0.9365, MAE = 1.11, RMSE = 1.38
+Оригинальный RandomForest (без PCA): R² = 0.9526
+Качество модели на PCA-признаках оказалось ниже, поэтому от использования PCA отказались.
+Визуализация первых двух главных компонент сохранена в presentation/pca_visualization.png.
 
 ## Отчёт
 
