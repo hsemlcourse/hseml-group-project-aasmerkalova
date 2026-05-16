@@ -1,0 +1,16 @@
+services:
+  ml-project:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./notebooks:/app/notebooks
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./presentation:/app/presentation
+      - ./report:/app/report
+    environment:
+      - JUPYTER_TOKEN=cp1
+    restart: unless-stopped
