@@ -1,0 +1,29 @@
+[tool.ruff]
+# Допустимая длина строки
+line-length = 100
+
+# Набор правил: E - ошибки, W - предупреждения, F - ошибки импорта, I - сортировка импортов
+select = ["E", "W", "F", "I"]
+
+# Игнорируем конкретные правила, если нужно (например, слишком длинные строки в докстрингах)
+ignore = ["E501"]
+
+# Исключить папки, которые не нужно проверять
+exclude = [
+    ".venv",
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    "*.egg-info",
+    "data",
+    "models",
+    "notebooks",
+    "presentation",
+    "report"
+]
+
+[tool.ruff.format]
+# Форматирование через ruff fmt
+quote-style = "double"
+indent-style = "space"
